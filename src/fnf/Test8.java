@@ -1,9 +1,10 @@
 package fnf;
 
-public class Test7 {
-	// This class is to test Units, Leaders, Infantry, Artillery classes
+public class Test8 {
+
+// This class is to test Units, Leaders, Infantry, Artillery classes
 	public static void main(String[] args) {
-		System.out.println("starting Test 7");
+		System.out.println("starting");
 		boolean union = false;
 		String corps = "1st";
 		String division = "2nd";
@@ -20,9 +21,8 @@ public class Test7 {
 		String leaderName = null;
 		String rank = null;
 		int ability = 0;
-
-		Units unit = new Units(union, corps, division, brigade, regiment, player, exp, fresh, warn, spent, braveColonel,
-				type, startingFormation, leaderName, rank, ability);
+		
+		Units unit = new Units(union, corps, division, brigade, regiment, player, exp, fresh, warn, spent, braveColonel, type, startingFormation, leaderName, rank, ability);
 		System.out.println(unit.getSide());
 		Combat combat = new Combat();
 		combat.fallenLeaderTable(unit);
@@ -34,5 +34,8 @@ public class Test7 {
 		System.out.println(unit.getCorps());
 		System.out.println(unit.getDivision());
 		System.out.println(unit.getBrigade());
+		
+		
 	}
+
 }

@@ -118,5 +118,29 @@ public class Game {
 		this.currentTime = currentTime;
 	}
 	
+	public int unionLossesMod() {
+		if (this.unionLosses > this.unionHeavyCasualties) {
+			if (this.unionLosses > this.confederateLosses) {
+				return -2;
+			} else {
+				return -1;
+			}
+		} else {
+			return 0;
+		}
+	}
+	
+	public int confederateLossesMod() {
+		if (this.confederateLosses > this.confederateHeavyCasualties) {
+			if (this.confederateLosses > this.unionLosses) {
+				return -2;
+			} else {
+				return -1;
+			}
+		} else {
+			return 0;
+		}
+	}
+	
 }
 
