@@ -76,6 +76,10 @@ public class FnFRules {
 		} else {
 			return -2;
 		}
-		
+	}
+	
+	private String weaponRange(Units unit) {
+		String weaponType = unit.getWeaponType();
+		return "hi";
 	}
 }

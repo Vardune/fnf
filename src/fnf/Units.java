@@ -1,6 +1,9 @@
 package fnf;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class Units {
 
@@ -8,6 +11,8 @@ public class Units {
 	private String division;
 	private String brigade;
 	private String regiment;
+	private String regimentLong;
+	private String battery;
 	private String player;
 	private int exp;
 	private int fresh;
@@ -15,6 +20,7 @@ public class Units {
 	private int spent;
 	private int curStands;
 	private boolean braveColonel;
+	private boolean sharpshooter;
 	private boolean union;
 	private boolean fixedGuns;
 	private int morale;
@@ -25,12 +31,16 @@ public class Units {
 	private boolean moved;
 	private int firedStands;
 	private String leaderName;
-	private String rank;
+	private String leaderRank;
+	private String replacementLeaderName;
+	private String replacementLeaderRank;
 	private int ability;
 	private String fallenLeaderResult;
 	private String fallenReplacement;
 	private boolean replacement;
 	private String startingFormation;
+	private String weaponType;
+	private int section;
 	
 	
 	
@@ -48,9 +58,9 @@ public class Units {
 		this.braveColonel = braveColonel;
 		this.type = type;
 		this.formation = startingFormation;
-		this.startingFormation = startingFormation;
+		this.setStartingFormation(startingFormation);
 		this.leaderName = leaderName;
-		this.rank = rank;
+		this.leaderRank = rank;
 		this.ability = ability;
 		
 				
@@ -64,10 +74,94 @@ public class Units {
 		
 	}
 
-	public Units(HashMap hm) {
-		
-	}
-		
+    public Units(HashMap hm) {
+    	setSharpshooter(false);
+    	setMoved(false);
+    	setMorale(3);
+    	setFiredStands(0);
+        // Get a set of the entries
+        Set<String> set = hm.entrySet();
+        // Get an iterator
+        Iterator i = set.iterator();
+        // Display elements
+        while(i.hasNext()) {
+           Map.Entry me = (Map.Entry)i.next();
+           String key = (String) me.getKey();
+           switch (key) {
+	           case "UnionNOTConfedereate" :
+	        	   setUnion((boolean) me.getValue());
+	        	   break;
+	           case "Corps" :
+	        	   setCorps((String) me.getValue());
+	        	   break;
+               case "Division" :
+            	   setDivision((String) me.getValue());
+            	   break;
+               case "Brigade" :
+            	   setBrigade((String) me.getValue());
+            	   break;
+               case "Regiment" :
+            	   setRegiment((String) me.getValue());
+            	   break;
+               case "RegimentLong" :
+            	   setRegimentLong((String) me.getValue());
+            	   break;
+               case "Type" :
+            	   setType((int) me.getValue());
+            	   break;
+               case "Player" :
+            	   setPlayer((String) me.getValue());
+            	   break;
+               case "Exp" :
+            	   setExp((int) me.getValue());
+            	   break;
+               case "StartingFormation" :
+            	   setFormation((String) me.getValue());
+            	   break;
+               case "Sharpshooter" :
+            	   setSharpshooter((boolean) me.getValue());
+            	   break;
+               case "Fresh" :
+            	   setFresh((int) me.getValue());
+            	   setCurStands(getFresh());
+            	   break;
+               case "Warn" :
+            	   setWarn((int) me.getValue());
+            	   break;
+               case "Spent" :
+            	   setSpent((int) me.getValue());
+            	   break;
+               case "Ability" :
+            	   setAbility((int) me.getValue());
+            	   break;
+               case "Battery" :
+            	   setBattery((String) me.getValue());
+            	   break;
+               case "LeaderName" :
+            	   setLeaderName((String) me.getValue());
+            	   break;
+               case "Rank" :
+            	   setLeaderRank((String) me.getValue());
+            	   break;
+               case "Replacement" :
+            	   setReplacementLeaderName((String) me.getValue());
+            	   break;
+               case "ReplacementRank" :
+            	   setReplacementLeaderRank((String) me.getValue());
+            	   break;
+               case "WeaponType" :
+            	   setWeaponType((String) me.getValue());
+            	   break;
+               case "Section" :
+            	   setSection((int) me.getValue());
+            	   break;
+               default: 
+        	   		// garbage data in the database - I will just ignore it
+                    break;
+           }
+        }
+    };	
+    
 	public String getCorps() {
 		return corps;
 	}
@@ -298,8 +392,8 @@ public class Units {
 		this.leaderName = leaderName;
 	}
 
-	public void setRank(String rank) {
-		this.rank = rank;
+	public void setLeaderRank(String rank) {
+		this.leaderRank = rank;
 	}
 
 	public void setAbility(int ability) {
@@ -310,8 +404,8 @@ public class Units {
 		return leaderName;
 	}
 
-	public String getRank() {
-		return rank;
+	public String getLeaderRank() {
+		return leaderRank;
 	}
 
 	public int getAbility() {
@@ -376,6 +470,70 @@ public class Units {
 		if (this.firedStands > curStands) {
 			this.firedStands = curStands;
 		}
+	}
+
+	public boolean isSharpshooter() {
+		return sharpshooter;
+	}
+
+	public void setSharpshooter(boolean sharpshooter) {
+		this.sharpshooter = sharpshooter;
+	}
+
+	public String getBattery() {
+		return battery;
+	}
+
+	public void setBattery(String battery) {
+		this.battery = battery;
+	}
+
+	public String getStartingFormation() {
+		return startingFormation;
+	}
+
+	public void setStartingFormation(String startingFormation) {
+		this.startingFormation = startingFormation;
+	}
+
+	public String getReplacementLeaderName() {
+		return replacementLeaderName;
+	}
+
+	public void setReplacementLeaderName(String replacementLeaderName) {
+		this.replacementLeaderName = replacementLeaderName;
+	}
+
+	public String getReplacementLeaderRank() {
+		return replacementLeaderRank;
+	}
+
+	public void setReplacementLeaderRank(String replacementLeaderRank) {
+		this.replacementLeaderRank = replacementLeaderRank;
+	}
+
+	public String getRegimentLong() {
+		return regimentLong;
+	}
+
+	public void setRegimentLong(String regimentLong) {
+		this.regimentLong = regimentLong;
+	}
+
+	public String getWeaponType() {
+		return weaponType;
+	}
+
+	public void setWeaponType(String weaponType) {
+		this.weaponType = weaponType;
+	}
+
+	public int getSection() {
+		return section;
+	}
+
+	public void setSection(int section) {
+		this.section = section;
 	}
 
 }

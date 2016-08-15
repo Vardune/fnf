@@ -115,7 +115,6 @@ public class Combat {
 		System.out.println("Outflanked modifier " + dieMod);
 
 		// heavy casualties and greater losses
-		System.out.println("Is Union  " + unit.isUnion());
 		if (unit.isUnion()) {
 			dieMod += game.unionLossesMod();
 		} else {
