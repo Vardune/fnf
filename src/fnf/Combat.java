@@ -62,54 +62,70 @@ public class Combat {
 		}
 
 		unit.setFallenLeaderResult(fallenResult);
-
 	}
 
-	public void rally(Units unit, boolean inCommand, boolean formationCover, boolean outflanked, Game game) {
+
+	public void maneuver(Units unit, String newFormation, Units attachedLeader, boolean formationCover, boolean outflanked, Game game) {
 		// data passed in
 		// unit - The unit attempting to move
-		// inCommand - Is the leader in command range
+		// inCommand - Is the leader in command range - set to true for now
 		// formationOrCover - Is the unit in a good rally formation or has cover
 		// Outflanked
 
 		int dieMod = 0;
+		System.out.println("Start modifier " + dieMod);
 
 		// In command leader
+		boolean inCommand = true;
+		
+		// Change formation voluntarily
+		unit.setFormation(newFormation);
 
 		// Attached leader
 		if (unit.isBraveColonel()) {
 			dieMod += 1;
-		} else {
-
+		} else if (attachedLeader != null) {
+			if (attachedLeader.getTypeDesc() == "Leader") {
+				dieMod += 1 + unit.getAbility();
+			}
 		}
+		System.out.println("Leader modifier " + dieMod);
 
 		// Unit exp modifier
 		dieMod += unit.getExp();
+		System.out.println("Exp modifier " + dieMod);
 
 		// Unit fresh/warn/spent modifier
 		dieMod += unit.getFWSMod();
+		System.out.println("FWS modifier " + dieMod);
 
 		// Unit is battery
 		if (unit.isBattery())
 			dieMod += 2;
+		System.out.println("Battery modifier " + dieMod);
 
 		// mod for formations and cover
 		if (formationCover)
 			dieMod += 1;
+		System.out.println("Form/Cover modifier " + dieMod);
 
 		// mod for outflanked or broken
 		if (outflanked || unit.isBroken())
 			dieMod += -2;
+		System.out.println("Outflanked modifier " + dieMod);
 
 		// heavy casualties and greater losses
+		System.out.println("Is Union  " + unit.isUnion());
 		if (unit.isUnion()) {
-			game.unionLossesMod();
+			dieMod += game.unionLossesMod();
 		} else {
-			game.confederateLossesMod();
+			dieMod += game.confederateLossesMod();
 		}
+		System.out.println("Heavy losses modifier " + dieMod);
 
 		Random randomGenerator = new Random();
 		int roll = randomGenerator.nextInt(10);
+		System.out.println("Roll " + roll + " modifier " + dieMod);
 		roll += dieMod;
 		String movementResult = "";
 		if (inCommand) {
@@ -143,20 +159,19 @@ public class Combat {
 				unit.setMovementResult(movementResult);
 
 			} else if (roll <= 7) {
-				movementResult = "Well Handled.  May make a full move.";
 				unit.setMovementResult(movementResult);
 				switch (unit.getMorale()) {
 				case 1: // Broken
 					unit.setMorale(3); // Good morale
 					unit.setFormation("Line");
-					movementResult = "Retreat out of close fire range moving more than full rate if nessary.";
+					movementResult = "Retreat out of close fire range moving more than full rate if nessary.  Reform to line in good order facing the enemy.";
 					unit.setMovementResult(movementResult);
 				case 2: // Disorganized
 					unit.setMorale(3);
-					movementResult = "Well Handled.  May make a full move.";
+					movementResult = "Retreat out of close fire range moving more than full rate if nessary.  Reform good order facing the enemy.";
 					unit.setMovementResult(movementResult);
 				case 3:
-					movementResult = "Double quick.  May full move and a half move.";
+					movementResult = "Well Handled.  May make a full move.";
 					unit.setMovementResult(movementResult);
 				}
 			} else if (roll >= 8) {

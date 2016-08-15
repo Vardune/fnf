@@ -30,6 +30,20 @@ public class Game {
         this.currentTime = currentTime;
     }
 
+    public Game(String scenario, String startingSide, int confederateHeavyCasualties, int unionHeavyCasualties, int gameLength, int startingTime) {
+        this.scenario = scenario;
+        this.turn = 1;
+        this.phase = startingSide + " Move";
+        this.startingSide = startingSide;
+        this.confederateHeavyCasualties = confederateHeavyCasualties;
+        this.confederateLosses = 0;
+        this.unionHeavyCasualties = unionHeavyCasualties;
+        this.unionLosses = 0;
+        this.gameLength = gameLength;
+        this.startingTime = startingTime;
+        this.currentTime = startingTime;
+    }
+
     public String getScenario() {
         return scenario;
     }

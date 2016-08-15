@@ -2,6 +2,8 @@ package fnf;
 
 import java.util.LinkedList;
 
+import oldCode.Leaders;
+
 public class FnFRules {
 
 	public void movementRallyModifier(Units unit, Game game, LinkedList leaderList, boolean formationOrCover, boolean enfiladedOrBroken) {
@@ -11,14 +13,14 @@ public class FnFRules {
 //		totalLeaderMod += attachedLeaderMod;
 	}
 	
-	public int attachLeaderValue(Leaders leader, Units unit) {
-		String type = unit.getUnitType();
+	public int attachLeaderValue(Units leader, Units unit) {
+		String type = unit.getTypeDesc();
 		if(type == "Leader") {
 			System.out.println("Can not attach leader to a leader.");
 			return -100;
 		}
 		int able = 0;
-		switch (leader.getAbility()) {
+		switch (leader.getAbilityDesc()) {
 		case "Gallant":
 			able = 1;
 			break;
@@ -50,7 +52,7 @@ public class FnFRules {
 		}
 		
 		int braveColonel = 0;
-		if (unit.hasBraveColonel()) {
+		if (unit.isBraveColonel()) {
 			braveColonel = 1;
 		}
 		
@@ -66,10 +68,10 @@ public class FnFRules {
 	}
 
 	private int freshWarnSpentModifier(Units unit) {
-		if (unit.getCurrentStands() > unit.getWarn()) {
+		if (unit.getCurStands() > unit.getWarn()) {
 			return 2;
 		}
-		if (unit.getCurrentStands() > unit.getSpent()) {
+		if (unit.getCurStands() > unit.getSpent()) {
 			return 0;
 		} else {
 			return -2;

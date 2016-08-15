@@ -151,9 +151,17 @@ public class Units {
 	public void setWarn(int warn) {
 		this.warn = warn;
 	}
+	
+	public int getWarn() {
+		return warn;
+	}
 
 	public void setSpent(int spent) {
 		this.spent = spent;
+	}
+	
+	public int getSpent() {
+		return spent;
 	}
 
 	public int getCurStands() {
